@@ -1,0 +1,213 @@
+﻿(function ($) {
+    $.common = {
+        postJSON: function (url, data, success) {
+            $.ajax({
+                type: "post",
+                url: url,
+                data: data,
+                dataType: "json",
+                success: function () {
+
+                },
+                error: function () {
+                    $.common.myAlert("系统异常，请稍后重试！");
+                }
+            });
+        }
+     }
+})(jQuery);
+
+//验证是否有汉字
+function isCharacter(charValue) {
+    var reg = /^[\u4e00-\u9fa5]{0,}$/;
+
+    if (!reg.test(charValue)) {
+        return false;
+    }
+    else
+        return charValue;
+}
+//验证手机号
+function checkPhone(phone) {
+    if (!(/^1[3456789]d{9}$/.test(phone))) {
+     
+        return false;
+    }
+    else
+        return phone;
+}
+$.fn.serializeObject = function () {
+    var ct = this.serializeArray();
+    var obj = {};
+    $.each(ct, function () {
+        if (obj[this.name] !== undefined) {
+            if (!obj[this.name].push) {
+                obj[this.name] = [obj[this.name]];
+            }
+            obj[this.name].push(this.value || "");
+        } else {
+            obj[this.name] = this.value || "";
+        }
+    });
+    return obj;
+};
+function jsonDateFormat(jsonDate) {//json日期格式转换为正常格式
+    try {//出自http://www.cnblogs.com/ahjesus 尊重作者辛苦劳动成果,转载请注明出处,谢谢!
+        var date = new Date(parseInt(jsonDate.replace("/Date(", "").replace(")/", ""), 10));
+        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();;
+        var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+        var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+        var milliseconds = date.getMilliseconds();
+        return date.getFullYear() + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;//+ "." + milliseconds;
+    } catch (ex) {//出自http://www.cnblogs.com/ahjesus 尊重作者辛苦劳动成果,转载请注明出处,谢谢!
+        return "";
+    }
+}
+//获取当前时间
+function CurentTime() {
+    var now = new Date();
+
+    return todate(now);
+}
+
+//两个日期相差条数（后减前）
+function getsubDay(date1,date2)
+{
+    var d1 = new Date(date1);
+    var d2 = new Date(date2);
+    var days = (d2 - d1) / (1 * 24 * 60 * 60 * 1000);
+    return (days);
+}
+//转化日期格式
+function todate(date)
+{
+    var d = new Date(date);
+    var year = d.getFullYear();       //年
+    var month = d.getMonth() + 1;     //月
+    var day = d.getDate();            //日
+
+    var hh = d.getHours();            //时
+    var mm = d.getMinutes();          //分
+    var ss = d.getSeconds();
+    var clock = year + "-"
+    if (month < 10)
+        clock += "0";
+
+    clock += month + "-";
+
+    if (day < 10)
+        clock += "0";
+
+    clock += day + " ";
+
+    if (hh < 10)
+        clock += "0";
+
+    clock += hh + ":";
+    if (mm < 10)
+        clock += '0';
+    clock += mm + ":";
+    if (ss < 10)
+        clock += "0";
+    clock += ss;
+    return (clock);
+}
+function getNYR(date)
+{
+    var d = new Date(date);
+    var year = d.getFullYear();       //年
+    var month = d.getMonth() + 1;     //月
+    var day = d.getDate();            //日
+    var clock = year + "-"
+    if (month < 10)
+        clock += "0";
+
+    clock += month + "-";
+
+    if (day < 10)
+        clock += "0";
+
+    clock += day ;
+    return clock;
+
+}
+//添加年
+function addYear(date, years)
+{
+    var d = new Date(date);
+    d.setFullYear(d.getFullYear() + years);
+    return todate(d);
+}
+
+//添加月
+function addMonth(date, month)
+{
+    var d = new Date(date);
+    d.setMonth(d.getMonth() + month);
+    return todate(d);
+}
+
+//添加天数；
+function addDate(date, days) {
+    var d = new Date(date);
+    d.setDate(d.getDate() + days);
+    return todate(d);
+}
+
+//隐藏与显示
+function DisplayAndHiddenBtn(btnId, type) {
+    var currentBtn = document.getElementById(btnId);
+    if (type == "d") {
+        currentBtn.style.display = "block"; //style中的display属性
+    }
+    else if (type == "h") {
+        currentBtn.style.display = "none";
+    }
+}
+
+//数组去重
+function removeRepater(array) {
+    array = array || [];
+    var a = {};
+    for (var i = 0; i < array.length; i++) {
+        var v = array[i];
+        if (a[v] == undefined) {
+            a[v] = 1;
+        }
+    }
+
+    array.length = 0;
+    for (var i in a) {
+        array[array.length] = i;
+    }
+
+    return array;
+}
+
+//select + input 实现模糊查询
+function SelectonInput(selectId,inputId,form) {
+
+    var list = selectId;//获取select的列表
+    var input = inputId;//搜索intput
+    $(input).on('input', function () {
+        var value =$(input).val(),
+            value = value.replace(/^\s*/, "");
+        $(list).val(value);
+        form.render();//渲染
+        $(list).next().find(".layui-select-title input").click();
+        var dl = $(list).next().find("dl").children();
+        var j = -1;
+        for (var i = 0; i < dl.length; i++) {
+            if (dl[i].innerHTML.indexOf(value) <= -1) {
+                dl[i].style.display = "none";
+                j++
+            }
+            if (j == dl.length - 1) {
+                $(list).next().find("dl").css({ "display": "none" });
+            }
+        }
+        
+    });
+}

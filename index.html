@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+     <title>信息填写</title>
+</head>
+
+<script language=JavaScript>
+ 
+    function InputCheck(){
+        var x = document.forms["Login"]["username"].value;
+        if ( x == "" || x == null){
+            alert("请输入用户名!!");
+            return (false);
+        }
+    
+        var y= document.forms["Login"]["password"].value;
+        if (y == "" || y == null){
+            alert("请输入密码!");
+            return (false);
+        } 
+    }
+
+    function Regpage() {
+        location='register.html';
+    } 
+</script>
+
+<body> 
+<div style="position: absolute; left: 50%; top: 50%;width: 500px; margin-left:-250px; margin-top: -200px">
+ 
+  <div style="background: #eFeFeF; padding: 20px;border-radius: 4px;box-shadow: 5px 5px 20px #444444" > 
+    <div> 
+      <form action="login.php" method="post" name="Login"  onsubmit="return InputCheck()"> 
+        <div style="color: black"> 
+          <h2>注册登录系统</h2> 
+        </div> 
+        <hr> 
+        <div> 
+          <label>用户名</label> 
+          <div> 
+            <input type="text" name="username" id="username" placeholder="用户名" autocomplete="off">
+           </div> 
+        </div> 
+        <div> 
+          <label>密  码</label> 
+          <div> 
+            <input type="password" name="password" id="password" placeholder="密码" autocomplete="off"> 
+          </div> 
+        </div> 
+        <div> 
+          <div> 
+            <input type="submit" value="登陆"> 
+            <input type="button" name="register" id="register" value="注册" onclick="Regpage()"> 
+          </div> 
+        </div> 
+      </form> 
+    </div> 
+  </div> 
+</div>
+</body>
+</html>
