@@ -72,7 +72,7 @@
                     姓名
                 </td>
                 <td>
-                     <?php $_POST["age"]; ?>
+                     <?php echo $_POST["fname"]; ?>
 
                 </td>
 
@@ -145,7 +145,8 @@
                     审核时间
                 </td>
                 <td colspan="3">
-                    2021/5/28 22:48:00
+                   <?php  echo "".date("Y/m/d G:H:s",strtotime("-1 day 4 hours 2 seconds")); ?>
+
                 </td>
             </tr>
         </tbody></table>
