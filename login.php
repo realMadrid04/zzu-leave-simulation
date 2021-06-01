@@ -50,7 +50,7 @@
 
             <p style="margin:0 auto ;text-align:center;font-size:18px;font-weight:800;">
 
-                起止日期：<label style="color:red"><?php echo $_POST["starttime"]; ?></label>
+                起止日期：<label style="color:red"><?php  echo "".date("Y/m/d s",strtotime("-1 day")); ?>至<?php  echo "".date("m/d",strtotime("+1 day")); ?></label>
             </p>
             <p style="margin:0 auto ;text-align:center;" class="padding-top-10">
                <img src="./11_files/02981B02CB1E4CCBBC174518D6C92E47.jpg" width="150">
@@ -121,7 +121,7 @@
                     请假事由
                 </td>
                 <td colspan="3" style="height:100px;text-align:left">
-                    材料上交
+                    <?php echo $_POST["reason"]; ?>
                 </td>
             </tr>
             <tr class="layui-form-item">
@@ -129,7 +129,7 @@
                     审核人
                 </td>
                 <td>
-                    唐沛然 等
+                    <?php echo $_POST["teacher"]; ?> 等
 
                 </td>
                 <td class="bg-gray">
